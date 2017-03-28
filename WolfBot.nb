@@ -1,0 +1,183 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      6938,        173]
+NotebookOptionsPosition[      5962,        146]
+NotebookOutlinePosition[      6479,        164]
+CellTagsIndexPosition[      6436,        161]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[TextData[StyleBox["getUpdates", "Section"]], "Text",
+ CellChangeTimes->{{3.699705944563717*^9, 3.699705980705791*^9}, {
+  3.699706312922244*^9, 
+  3.699706314120516*^9}},ExpressionUUID->"3bd67cef-e2d0-4006-b415-\
+e71bdc2360e3"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"path", "=", 
+   RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"configFile", "=", 
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{"path", ",", "\"\<configFile.json\>\""}], "}"}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"logSizeLimit", "=", 
+    RowBox[{"5", "*", 
+     RowBox[{"10", "^", "4"}]}]}], ";", 
+   RowBox[{"pollTime", "=", ".1"}], ";"}], "\[IndentingNewLine]"}], "\n", 
+ RowBox[{
+  RowBox[{"Import", "[", "\"\<~/WolfBot/WolfBot.wl\>\"", "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Needs", "[", "\"\<WolfBot`\>\"", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"BotCall", "[", 
+   RowBox[{
+    RowBox[{"Import", "[", 
+     RowBox[{"configFile", ",", "\"\<RawJSON\>\""}], "]"}], ",", 
+    "\"\<deleteWebhook\>\""}], "]"}], ";"}], "\n", 
+ RowBox[{"BotProcessMessage", "[", 
+  RowBox[{
+  "configFile", ",", "logSizeLimit", ",", "pollTime", ",", "\"\<\>\""}], 
+  "]"}]}], "Input",
+ CellChangeTimes->{{3.6974732651482983`*^9, 3.697473330739201*^9}, {
+   3.697477431013803*^9, 3.697477431452259*^9}, {3.697598970532078*^9, 
+   3.697599098300226*^9}, {3.697601425974629*^9, 3.697601472217123*^9}, {
+   3.69760157614802*^9, 3.697601576267679*^9}, {3.6976049338770313`*^9, 
+   3.697604934181382*^9}, {3.69760508964699*^9, 3.697605093933134*^9}, {
+   3.6976058122781057`*^9, 3.697605814889083*^9}, {3.6976058572409153`*^9, 
+   3.697605937630107*^9}, {3.697606013703349*^9, 3.697606088709208*^9}, {
+   3.6976062181194677`*^9, 3.697606249136252*^9}, {3.697614869310711*^9, 
+   3.697614878326326*^9}, {3.6976202376144953`*^9, 3.6976202391085453`*^9}, {
+   3.697622121715507*^9, 3.697622128777861*^9}, {3.697622542475684*^9, 
+   3.697622542643176*^9}, {3.697648138724416*^9, 3.697648148426627*^9}, {
+   3.6976509393740807`*^9, 3.6976509408461*^9}, {3.697656100481944*^9, 
+   3.697656109942245*^9}, 3.697656202044015*^9, {3.6977743581349087`*^9, 
+   3.697774358277211*^9}, {3.697777064342136*^9, 3.697777074877426*^9}, {
+   3.6977800901952257`*^9, 3.697780103399764*^9}, 3.697781146705214*^9, {
+   3.6977949049504538`*^9, 3.697794908449861*^9}, {3.6977951548756933`*^9, 
+   3.697795158394187*^9}, {3.69779519015093*^9, 3.69779520592831*^9}, {
+   3.697795236990919*^9, 3.697795257926264*^9}, {3.697795433376114*^9, 
+   3.697795434477491*^9}, {3.697795466352467*^9, 3.697795482938365*^9}, {
+   3.697798211601115*^9, 3.6977982365077677`*^9}, {3.69781983296262*^9, 
+   3.69781984031763*^9}, 3.697819884390259*^9, {3.6979571858396397`*^9, 
+   3.697957187621889*^9}, 3.6981120377638407`*^9, {3.698127381937462*^9, 
+   3.698127383183549*^9}, {3.698127900781142*^9, 3.6981279016773443`*^9}, {
+   3.698235214120328*^9, 3.698235215152022*^9}, 3.698235247737342*^9, {
+   3.69881873306898*^9, 3.6988187470829573`*^9}, 3.698818927222074*^9, 
+   3.698819180968543*^9, {3.698819233093278*^9, 3.698819238796957*^9}, {
+   3.698819421955418*^9, 3.698819455988082*^9}, {3.698822620266749*^9, 
+   3.6988226610668716`*^9}, {3.6988226970393057`*^9, 3.698822703830872*^9}, {
+   3.6997058800492373`*^9, 3.699705881863482*^9}, {3.699706241308916*^9, 
+   3.6997062912229424`*^9}},ExpressionUUID->"d63a9c41-b45a-450e-884f-\
+dadc7b808b5f"],
+
+Cell[TextData[StyleBox["webhook", "Section"]], "Text",
+ CellChangeTimes->{{3.6997059848431597`*^9, 3.6997059981293697`*^9}, {
+  3.699706321075673*^9, 
+  3.6997063220838213`*^9}},ExpressionUUID->"8d442daa-a223-45b4-b1c6-\
+d6d73d4d34ee"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Import", "[", "\"\<~/WolfBot/WolfBot.wl\>\"", "]"}], ";"}], "\n", 
+ RowBox[{"Needs", "[", "\"\<WolfBot`\>\"", "]"}], "\n", 
+ RowBox[{
+  RowBox[{"path", "=", 
+   RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"configFile", "=", 
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{"path", ",", "\"\<configFile.json\>\""}], "}"}], "]"}]}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{"logSizeLimit", "=", 
+   RowBox[{"5", "*", 
+    RowBox[{"10", "^", "4"}]}]}], ";", " ", 
+  RowBox[{"pollTime", "=", "0.1"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.6997060279810038`*^9, 
+  3.699706169578211*^9}},ExpressionUUID->"eaf4752e-b0ef-42b4-88ae-\
+21010dfc7f41"],
+
+Cell[BoxData[
+ RowBox[{"obj", "=", 
+  RowBox[{"CloudDeploy", "[", 
+   RowBox[{
+    RowBox[{"APIFunction", "[", 
+     RowBox[{
+      RowBox[{"{", "}"}], ",", 
+      RowBox[{
+       RowBox[{"BotProcessMessage", "[", 
+        RowBox[{"configFile", ",", "logSizeLimit", ",", "pollTime", ",", 
+         RowBox[{"ToString", "[", 
+          RowBox[{"HTTPRequestData", "[", "\"\<Body\>\"", "]"}], "]"}]}], 
+        "]"}], "&"}]}], "]"}], ",", 
+    RowBox[{"Permissions", "->", "\"\<Public\>\""}]}], "]"}]}]], "Input",Expre\
+ssionUUID->"213cbbe4-8ba0-49f4-bc72-470f606e7a14"],
+
+Cell[BoxData[
+ RowBox[{"BotCall", "[", 
+  RowBox[{
+   RowBox[{"Import", "[", 
+    RowBox[{"configFile", ",", "\"\<RawJSON\>\""}], "]"}], ",", 
+   "\"\<setWebhook\>\"", ",", 
+   RowBox[{"{", 
+    RowBox[{"\"\<url\>\"", "->", 
+     RowBox[{"obj", "[", 
+      RowBox[{"[", "1", "]"}], "]"}]}], "}"}]}], "]"}]], "Input",ExpressionUUI\
+D->"42da35f6-b08e-416e-b656-3fe38e4f26e1"]
+},
+WindowSize->{808, 568},
+WindowMargins->{{20, Automatic}, {Automatic, 44}},
+FrontEndVersion->"11.1 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 13, \
+2017)",
+StyleDefinitions->FrontEnd`FileName[{$RootDirectory, "Applications", 
+   "Mathematica.app", "Contents", "SystemFiles", "FrontEnd", "StyleSheets"}, 
+  "custom.nb", CharacterEncoding -> "UTF-8"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 232, 4, 47, "Text", "ExpressionUUID" -> \
+"3bd67cef-e2d0-4006-b415-e71bdc2360e3"],
+Cell[793, 26, 3256, 62, 219, "Input", "ExpressionUUID" -> \
+"d63a9c41-b45a-450e-884f-dadc7b808b5f"],
+Cell[4052, 90, 235, 4, 47, "Text", "ExpressionUUID" -> \
+"8d442daa-a223-45b4-b1c6-d6d73d4d34ee"],
+Cell[4290, 96, 723, 20, 150, "Input", "ExpressionUUID" -> \
+"eaf4752e-b0ef-42b4-88ae-21010dfc7f41"],
+Cell[5016, 118, 566, 14, 127, "Input", "ExpressionUUID" -> \
+"213cbbe4-8ba0-49f4-bc72-470f606e7a14"],
+Cell[5585, 134, 373, 10, 34, "Input", "ExpressionUUID" -> \
+"42da35f6-b08e-416e-b656-3fe38e4f26e1"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
