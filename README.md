@@ -1,9 +1,9 @@
 # WolfBot
 Telegram bot engine with Wolfram Language
 
-*Note:* this documention is a work in progress, but there are many lines of comment in the package file ("WolfBot.wl") that can give you an understanding.
+**Note:** this documention is a work in progress, but there are many lines of comment in the package file ("WolfBot.wl") that can give you an understanding.
 
-*Note:* this engine has been developed using a MacBook for MacOSX & the cloud (maybe, possibly, for Unix too!). It is very probable that it will not work in a Windows machine :-(
+**Note:** this engine has been developed using a MacBook for MacOSX & the cloud (maybe, possibly, for Unix too!). It is very probable that it will not work in a Windows machine :-(
 
 # Introduction
 This is a Wolfram Language package (engine) to interface with the [Telegram bot API]. If you're not familiar with Telegram bots, visit [Bots: An introduction for developers]. This package is based on the work by [Guillermo Hernández].
@@ -26,8 +26,11 @@ This package, however is more extended and has several other functions as well:
 * `BotProcessMessage` -> The main "front-end" of the package, which uses all other fucntions
 
 This engine relies heavily on creating and using logs. Basically, every communication is first logged and then processed. The `BotProcessMessage` function incorporates methods to insure that the logs are small enough so as not to reduce the importing speed.
+
 The engine supports bot "getUpdates" & "webhook" methods for receiving messages. For using webhooks, a Wolfram account with some [Cloud Credits] is required. *Beware that using this engine on webhooks can reduce your cloud credits and so cost you money!*
+
 Switching between "getUpdates" & "webhook" is done automatically like this:
+
 `BotProcessMessage[configFile,logSizeLimit,pollTime,""]` -> for using "getUpdates" &
 `BotProcessMessage[configFile,logSizeLimit,pollTime,ToString[HTTPRequestData["Body"]]]&],Permissions->"Public"]` -> for using "webhook".
 
