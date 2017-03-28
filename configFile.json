@@ -1,0 +1,19 @@
+{
+    "Token": "PASTE-YOUR-TOKEN",
+    "BotUsername": "Required",
+    "BotID": 111111111,
+    "AdminList": [
+        [
+            "Your Username",
+            222222222
+        ]
+    ],
+    "MemberList": [],
+    "TempList": [],
+    "BlackList": [],
+    "DarkSkyAPI": {
+        "Token": "DARK-SKY-API-TOKEN",
+        "TotalAPICalls": 0,
+        "LastCallDate": 1400000000
+    }
+}
