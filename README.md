@@ -1,7 +1,7 @@
 # WolfBot
 Telegram bot engine with Wolfram Language
 
-**Note:** this file is a work in progress, but there are many lines of comment in the package file ("WolfBot.wl") that can give you an understanding.
+**Note:** After reading this file, if you still have no clue, or have some technical question, contact me.
 
 **Note:** this engine has been developed using a MacBook for macOS & the cloud (maybe, possibly, for Unix too!). It is very probable that it will not work on a Windows machine :-(
 
@@ -83,7 +83,11 @@ Supported commands:
 5. `/ping`: calculates how many seconds it takes to receive and send back a typical message.
 6. `/wol` (`/wolfram`): is used to take advantage of the Wolfram language. Examples:
 
-    /wol 2+2, /wol N[Pi,200], /wol Plot[Sin[x],{x,0,2Pi}]
+    /wol 2+2,
+    
+    /wol N[Pi,200],
+    
+    /wol Plot[Sin[x],{x,0,2Pi}]
     
     The engine will send back a text/image/audio, based on the `Head` of the answer.
     
@@ -154,7 +158,31 @@ CloudDeploy[
 Note that the 4th argument of the `BotProcessMessage` isn't `""` like before. this indicates to the engine that it should use the webhook method. The The `APIFunction` brings up the `BotProcessMessage` whenever there are new updates from the Telegram API. The updates are logged and then answered in the same way as "getUpades" method, but the engine stops after answering all updates and won't call the Telegram API for new updates. This way, the bot's performance is much better and there's a lot less pressure on the system.
 
 
-# Appendix
+# Appendix A
+Some scrrenshots of the bot.
+
+## `/start` & `/help` commands
+![alt text][sc1]
+
+## `/whoami`, `/ping` & `/today` commands
+![alt text][sc2]
+
+## `/wol` commnad
+![alt text][sc3]
+
+## `/shell` command
+![alt text][sc4]
+
+## `/music` command
+![alt text][sc5]
+
+## `/files` command
+![alt text][sc6]
+
+## `/qr` command
+![alt text][sc7]
+
+# Appendix B
 A schematic of the engine when using "getUpdates" is shown below:
 ```
 Chart size:                       ┌──────────────────┐                        
@@ -233,3 +261,12 @@ Chart size:                       ┌──────────────�
 [@botfather]: https://t.me/botfather
 [Dark Sky API]: https://darksky.net/dev/
 [Shamsi]: https://github.com/pmsoltani/Shamsi-calendar
+
+
+[sc1]: https://github.com/pmsoltani/WolfBot/blob/master/screenshots/1.png
+[sc2]: https://github.com/pmsoltani/WolfBot/blob/master/screenshots/2.png
+[sc3]: https://github.com/pmsoltani/WolfBot/blob/master/screenshots/3.png
+[sc4]: https://github.com/pmsoltani/WolfBot/blob/master/screenshots/4.png
+[sc5]: https://github.com/pmsoltani/WolfBot/blob/master/screenshots/5.png
+[sc6]: https://github.com/pmsoltani/WolfBot/blob/master/screenshots/6.png
+[sc7]: https://github.com/pmsoltani/WolfBot/blob/master/screenshots/7.png
