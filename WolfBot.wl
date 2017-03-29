@@ -1273,7 +1273,7 @@ BotCommand[botFile_String,command_Association,followups_Association,
 							True,
 								response=RunProcess[$SystemShell,
 									"StandardOutput",text<>"\n"<>"exit"<>"\n"];
-								response=<|"filePath"->response,
+								response=<|"text"->response,
 									"keyboard"->BotKeyboardArray[{{}},0,0,1]|>
 						];
 						followup[targetID]={},
@@ -1604,6 +1604,12 @@ BotCommand[botFile_String,command_Association,followups_Association,
 							]<>" m"<>"\n\n";
 						
 						If[
+							(* The Dark Sky API has a free plan, which
+							allows 1000 call per day. This block checks if
+							the last call was made in the previous day.
+							
+							"FromUnixTime" returns a "DateObject", in
+							which the first 3 parts are {y,m,d}. *)
 							DateList[FromUnixTime[date]][[1;;3]]=!=
 								DateList[FromUnixTime[bot["DarkSkyAPI",
 									"LastCallDate"]]][[1;;3]],
@@ -1613,7 +1619,10 @@ BotCommand[botFile_String,command_Association,followups_Association,
 						];
 						
 						If[
-							bot["DarkSkyAPI","TotalAPICalls"]<950,
+							(* If total API calls is more than a threshold,
+							user "WeatherData" function, instead of the
+							Dark Sky API. *)
+							bot["DarkSkyAPI","TotalAPICalls"]<990,
 							
 							darkskyURL=URLBuild[
 								{"https://api.darksky.net/forecast",
@@ -1622,14 +1631,29 @@ BotCommand[botFile_String,command_Association,followups_Association,
 								ToString[text[[1,2]]]},
 								{"units"->"ca",
 								"exclude"->"minutely,hourly,flags"}];
+								(* The "ca" in the "unit" variable means that
+								the quantities are reported in SI system,
+								except for the windspeed, which will be
+								reported in km/h *)
+							
 							darkskyResult=URLExecute[darkskyURL,{},"RawJSON"];
 							
 							response=response<>"Weather Summary:"<>"\n\n"<>
 								"Condition: "<>
-								darkskyResult["currently","summary"]<>"\n\n"<>
-								"T: "<>ToString[darkskyResult["currently",
-									"temperature"]]<>" \[Degree]C"<>
+								darkskyResult["currently","summary"]<>
+								"\n\n"<>"T: "<>
+								ToString[
+									Round[
+										darkskyResult["currently",
+											"temperature"],
+										1
+									]
+								]<>" \[Degree]C"<>
 								If[
+									(* The API has an "apparentTemperature"
+									variable. If it differs significantly
+									from the true temperature, it is also
+									reported. *)
 									KeyExistsQ[darkskyResult["currently"],
 										"apparentTemperature"],
 								
@@ -1640,16 +1664,33 @@ BotCommand[botFile_String,command_Association,followups_Association,
 												"temperature"]],
 									
 										"\n"<>"Feels like "<>
-										ToString[darkskyResult["currently",
-											"apparentTemperature"]]<>" \[Degree]C",
+										ToString[
+											Round[
+												darkskyResult["currently",
+													"apparentTemperature"],
+												1
+											]
+										]<>" \[Degree]C",
 									
 										""
 									]
 								]<>"\n\n"<>
-								"P: "<>ToString[darkskyResult["currently",
-									"pressure"]]<>" millibars"<>"\n\n"<>
-								"Wind: "<>ToString[darkskyResult["currently",
-									"windSpeed"]]<>" km/h ";
+								"P: "<>
+								ToString[
+									Round[
+										darkskyResult["currently",
+											"pressure"],
+										1
+									]
+								]<>" millibars"<>"\n\n"<>
+								"Wind: "<>
+								ToString[
+									Round[
+										darkskyResult["currently",
+											"windSpeed"],
+										1
+									]
+								]<>" km/h ";
 								If[
 									KeyExistsQ[darkskyResult["currently"],
 										"windBearing"],
@@ -1658,6 +1699,10 @@ BotCommand[botFile_String,command_Association,followups_Association,
 										"windBearing"];
 									response=response<>"from "<>
 									Which[
+										(* The API returns the wind direction
+										in degrees from the true north. This
+										Which block converts it to more
+										sensible directions *)
 										0<windBearing<=45,
 											"N-NE",
 										45<windBearing<=90,
@@ -1679,12 +1724,18 @@ BotCommand[botFile_String,command_Association,followups_Association,
 
 							response=response<>
 								"\n"<>"Precipitation chance: "<>
-								ToString[100*darkskyResult["currently",
-									"precipProbability"]]<>"\n\n"<>
+								ToString[
+									Round[
+										100*darkskyResult["currently",
+											"precipProbability"],
+										1
+									]
+								]<>"%"<>"\n\n"<>
 								"Next 7 days: "<>"\n"<>
 								darkskyResult["daily","summary"]<>
 							
 								If[
+									(* Supporting weather alerts! *)
 									KeyExistsQ[darkskyResult,"alerts"],
 								
 									"\n\n"<>"----------------"<>"\n"<>
@@ -1710,12 +1761,16 @@ BotCommand[botFile_String,command_Association,followups_Association,
 								]]<>" km away."<>"\n\n"<>
 								"[Powered by Dark Sky]"<>
 								"(https://darksky.net/poweredby/)";
-							bot["DarkSkyAPI","TotalAPICalls"]+=1;
-							Export[botFile,bot,"JSON"];
+							
 							response=<|"text"->response,
 								"parse_mode"->"Markdown",
 								"disable_web_page_preview"->True,
-								"keyboard"->BotKeyboardArray[{{}},0,0,1]|>,
+								"keyboard"->BotKeyboardArray[{{}},0,0,1]|>;
+							
+							(* Change the configFile to account for the new
+							Dark Sky API call *)
+							bot["DarkSkyAPI","TotalAPICalls"]+=1;
+							Export[botFile,bot,"JSON"],
 						
 							response=response<>"T: "<>
 								ToString[WeatherData[text,"Temperature"]]<>
@@ -1776,13 +1831,17 @@ BotCommand[botFile_String,command_Association,followups_Association,
 						
 						Which[
 							Head[command["data"]]===Image,
-								response=BarcodeRecognize[command["data"]];
+								response=BarcodeRecognize[command["data"]],
+								
+							(* QR codes can be made from other file types
+							as well, like contacts. Add them here and in
+							the followup and the end of the next If block. *)
 								
 							True,
 								response=err1
 						];
 						response=<|"text"->response,
-							"keyboard"->BotKeyboardArray[{{}},0,0,1]|>,
+							"keyboard"->BotKeyboardArray[{{}},0,0,1]|>;
 						followup[targetID]={},
 								
 						If[
@@ -1790,13 +1849,11 @@ BotCommand[botFile_String,command_Association,followups_Association,
 							
 							response=BarcodeImage[text,"QR"];
 							response=<|"photo"->response,
-								"keyboard"->BotKeyboardArray[{{}},0,0,1]|>,
+								"keyboard"->BotKeyboardArray[{{}},0,0,1]|>;
 							followup[targetID]={},
 							
 							response="OK, send me a picture to scan, or "<>
-								"a contact to generate a QR code for for "<>
-								"you. You can also use /qr with some text "<>
-								"to generate your QR code";
+								"some text to generate a QR code.";
 							response=<|"text"->response,
 								"keyboard"->BotKeyboardArray[{{}},0,0,1]|>;
 							followup[targetID]={"/qr_text","/qr_photo"}
@@ -2161,7 +2218,7 @@ BotAnswer[bot_Association,message_,messageID_Integer,targetID_Integer,
 						BotCall[bot,"sendChatAction",{"chat_id"->targetID,
 							"action"->"upload_document"}];
 						res=BotFileCall[bot,msg["filePath"],
-							"sendDocument","document",arg],
+							"sendDocument","document",args],
 					
 					KeyExistsQ[msg,"photo"],
 						fileName=FileNameJoin[{saveDir,
