@@ -35,22 +35,27 @@ Switching between "getUpdates" & "webhook" is done automatically like this:
 `BotProcessMessage[configFile,logSizeLimit,pollTime,ToString[HTTPRequestData["Body"]]]&],Permissions->"Public"]` -> for using "webhook".
 
 # Using the engine
+A quick guide!
 
 ## getUpdates
-1. create a Telegram bot using [@botfather]
-2. fill out the "configFile.json" with your bot's information
-3. download the files "WolfBot.wl", "WolfBot.nb" & "WolfBot-Script.m"
-4. open "WolfBot.nb" and evaluate the "getupdates" section
-5. alternatively, open "WolfBot-Script.m" with a text editor and change the paths and then run the following command in the terminal:
-    `wolframscript -f Path/To/WolfBot-Script.m"`
+1. Create a Telegram bot using [@botfather].
+2. Download the files "configFile.json", "WolfBot.wl", "WolfBot.nb" & "WolfBot-Script.m" and place them together.
+3. Fill out the "configFile.json" with your bot's information (token & username) and save it.
+4. If you don't know your own Telegram ID, send a message (any messagae) to your bot via your Telegram client and then evaluate the "step 0" of the "WolfBot.nb" notebook. The resulting assocication contains the remainder of what you need to complete the "configFile.json", namely the variable "userID". Copy & paste that ID in "configFile, inside the "AdminList" and save it. Don't worry about the bot's ID.
+5. Evaluate the "step 1" of the "WolfBot.nb" notebook.
+    * Alternatively, open "WolfBot-Script.m" with a text editor and change the paths and then run the following command in the terminal:
+    ```
+    wolframscript -f Path/To/WolfBot-Script.m"
+    ```
+6. You're done! leave the notebook open and start communicating with your bot.
 
 ## Webhook
-1. create a Telegram bot using [@botfather]
-2. fill out the "configFile.json" with your bot's information
-3. create a folder named "configFile.json", "WolfBot" in your Wolfram cloud and upload the files "WolfBot.wl" & "WolfBot.nb" in it
-4. evaluate the cells in the "webhook" section
+0. Read the previous section!
+1. Create a folder named "WolfBot" in your Wolfram cloud and upload the files "configFile.json", "WolfBot.wl" & "WolfBot.nb" in it.
+2. Evaluate the "webhook" section of the notebook.
+3. You're done! you can close the notebook, as the API is created and it doesn't need you anymore! start having fun with your bot.
 
-## The "confingFile.json"
+# The "confingFile.json"
 The engine repeatedly uses this file to get important stuff from it:
 * The bot's token, needed for any kind of communication,
 * The bot's username, necessary for creating the folder on the disk, in which the logs and other files are stored,
@@ -67,41 +72,10 @@ When a new user starts the bot, he/she receives a message telling him/her that t
 Adding new admins can only be done by modifying the "configFile.json" manually.
 This admin/member feature of the engine can be bypassed by changing the `/start` command section of the `BotCommand` function so that new users are automatically added to the "MemberList", but it is not advised.
 
-### The Dark Sky API
+## The Dark Sky API
 The engine can send some info to the users about their location, such as the nearest city to them (if they aren't in one), elevation from the sea level and some weather information. The last part usually comes from the Dark Sky API.
 
 In the free mode of this API, 1000 calls per day are allowed, so the total count and the last call's date is saved in "configFile.json" and if the threshold is reached, the weather info will be sent using Wolfram language's `WeatherData`.
-
-## Supported commands
-Telegram bot commands are in the form `/command [optional arguments]`. Each command requires a minimum clearance which is defined at the beginning of the `BotCommand` function in an association called `minPrivilege`. This is because experienced Wolfram language users can execute potentially harmful commands (like shell commands). Note that when the engine is running in the cloud, the privilege of some commands is lowered, because the harming the system will be no longer the case.
-
-Supported commands:
-1. `/start`: common among every Telegram bot, it essentially starts the conversation with the bot. New users will be informed to wait until they are approved by the admin(s).
-2. `/accept` & `/decline`: used only by admins to approve/reject new users.
-3. `/temp`: used by the admins to see who is in the "TempList", so they can approve/reject them.
-4. `/whoami`: sends the user his/her status (Admin, Member, Blocked)
-5. `/ping`: calculates how many seconds it takes to receive and send back a typical message.
-6. `/wol` (`/wolfram`): is used to take advantage of the Wolfram language. Examples:
-
-    /wol 2+2,
-    
-    /wol N[Pi,200],
-    
-    /wol Plot[Sin[x],{x,0,2Pi}]
-    
-    The engine will send back a text/image/audio, based on the `Head` of the answer.
-    
-7. `/shell`: used to execute shell commands directly from Telegram. Some useful functions are displayed by custom keyboard, namely "Server screenshot" & "Turn off server's display", if the "admin" uses no arguments with the command; otherwise, the argument is executed (like `/shell pwd`).
-8. `/open`: with no arguments, sends back the list of installed applications on the server using a custom keyboard, otherwise opens the specified file/app (like `/open Terminal`, `/open ~/Downloads/123.txt`).
-9. `/music`: this one is really fun: on a macOS, one can control iTunes using a custom keyboard, otherwise this command generates a random music and sends it to the user.
-10. `/location`: after sending this command, the engine asks for the location of the user and will provide him/her some weather information (Powered by Dark Sky). This command isn't necessary and users can send their locations any time to receive the same results.
-11. `/today`: Displays the date in Shamsi & Gregorian calendars (needs the [Shamsi] package).
-12. `/qr`: is used to generate/scan qr codes. Users are asked to send a text or a picture.
-13. `/files`: used by the admins to browse and download files on their `$HomeDirectory`. Uses custom keyboard usually, unless the number of files in particular folder is too many (more that 240 files), in which case sends several messages to the user.
-14. `/dump`: used by the admins so they can make the server download their files/links. It will then provides them an option to open those files using the default application (if the server isn't running in the cloud, of course).
-15. `/keyboardoff`: removes the custom keyboards.
-16. `/help`: lists the available commands.
-17. `/botstop`: gives the admins a way to stop the engine remotely (without getting out of the bed!). To restart the engine, the admin needs to be behind his/her computer, of course. The effect of this command is only obvious when the engine uses "getUpdates" method.
 
 # How does it work?
 The way the engine works depends on the method by which it's working, namely "getUpdates" and "webhook".
@@ -157,6 +131,36 @@ CloudDeploy[
 
 Note that the 4th argument of the `BotProcessMessage` isn't `""` like before. this indicates to the engine that it should use the webhook method. The The `APIFunction` brings up the `BotProcessMessage` whenever there are new updates from the Telegram API. The updates are logged and then answered in the same way as "getUpades" method, but the engine stops after answering all updates and won't call the Telegram API for new updates. This way, the bot's performance is much better and there's a lot less pressure on the system.
 
+## Supported commands
+Telegram bot commands are in the form `/command [optional arguments]`. Each command requires a minimum clearance which is defined at the beginning of the `BotCommand` function in an association called `minPrivilege`. This is because experienced Wolfram language users can execute potentially harmful commands (like shell commands). Note that when the engine is running in the cloud, the privilege of some commands is lowered, because the harming the system will be no longer the case.
+
+Supported commands:
+1. `/start`: common among every Telegram bot, it essentially starts the conversation with the bot. New users will be informed to wait until they are approved by the admin(s).
+2. `/accept` & `/decline`: used only by admins to approve/reject new users.
+3. `/temp`: used by the admins to see who is in the "TempList", so they can approve/reject them.
+4. `/whoami`: sends the user his/her status (Admin, Member, Blocked)
+5. `/ping`: calculates how many seconds it takes to receive and send back a typical message.
+6. `/wol` (`/wolfram`): is used to take advantage of the Wolfram language. Examples:
+
+    /wol 2+2,
+    
+    /wol N[Pi,200],
+    
+    /wol Plot[Sin[x],{x,0,2Pi}]
+    
+    The engine will send back a text/image/audio, based on the `Head` of the answer.
+    
+7. `/shell`: used to execute shell commands directly from Telegram. Some useful functions are displayed by custom keyboard, namely "Server screenshot" & "Turn off server's display", if the "admin" uses no arguments with the command; otherwise, the argument is executed (like `/shell pwd`).
+8. `/open`: with no arguments, sends back the list of installed applications on the server using a custom keyboard, otherwise opens the specified file/app (like `/open Terminal`, `/open ~/Downloads/123.txt`).
+9. `/music`: this one is really fun: on a macOS, one can control iTunes using a custom keyboard, otherwise this command generates a random music and sends it to the user.
+10. `/location`: after sending this command, the engine asks for the location of the user and will provide him/her some weather information (Powered by Dark Sky). This command isn't necessary and users can send their locations any time to receive the same results.
+11. `/today`: Displays the date in Shamsi & Gregorian calendars (needs the [Shamsi] package).
+12. `/qr`: is used to generate/scan qr codes. Users are asked to send a text or a picture.
+13. `/files`: used by the admins to browse and download files on their `$HomeDirectory`. Uses custom keyboard usually, unless the number of files in particular folder is too many (more that 240 files), in which case sends several messages to the user.
+14. `/dump`: used by the admins so they can make the server download their files/links. It will then provides them an option to open those files using the default application (if the server isn't running in the cloud, of course).
+15. `/keyboardoff`: removes the custom keyboards.
+16. `/help`: lists the available commands.
+17. `/botstop`: gives the admins a way to stop the engine remotely (without getting out of the bed!). To restart the engine, the admin needs to be behind his/her computer, of course. The effect of this command is only obvious when the engine uses "getUpdates" method.
 
 # Appendix A
 Some scrrenshots of the bot.
