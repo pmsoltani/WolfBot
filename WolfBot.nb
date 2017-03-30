@@ -10,19 +10,82 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      6938,        173]
-NotebookOptionsPosition[      5962,        146]
-NotebookOutlinePosition[      6479,        164]
-CellTagsIndexPosition[      6436,        161]
+NotebookDataLength[     10065,        270]
+NotebookOptionsPosition[      8640,        229]
+NotebookOutlinePosition[      9157,        247]
+CellTagsIndexPosition[      9114,        244]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell[TextData[StyleBox["getUpdates", "Section"]], "Text",
- CellChangeTimes->{{3.699705944563717*^9, 3.699705980705791*^9}, {
-  3.699706312922244*^9, 
-  3.699706314120516*^9}},ExpressionUUID->"3bd67cef-e2d0-4006-b415-\
-e71bdc2360e3"],
+
+Cell[CellGroupData[{
+Cell[TextData[StyleBox["getUpdates", "Section"]], "Section",
+ CellChangeTimes->{
+  3.69986261407355*^9},ExpressionUUID->"755562c4-44f2-412a-b44e-405b72739dfc"],
+
+Cell[CellGroupData[{
+
+Cell["step 0: required only the first time ", "Subsection",
+ CellChangeTimes->{{3.69986246475708*^9, 
+  3.6998624935719433`*^9}},ExpressionUUID->"8af05d45-3dbf-47fd-b295-\
+079356c88296"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"path", "=", 
+   RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"configFile", "=", 
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{"path", ",", "\"\<configFile.json\>\""}], "}"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"bot", "=", 
+    RowBox[{"Import", "[", 
+     RowBox[{"configFile", ",", "\"\<RawJSON\>\""}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Import", "[", 
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{"path", ",", "\"\<WolfBot.wl\>\""}], "}"}], "]"}], "]"}], 
+  ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Needs", "[", "\"\<WolfBot`\>\"", "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"BotCall", "[", 
+    RowBox[{"bot", ",", "\"\<deleteWebhook\>\""}], "]"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"res", "=", 
+  RowBox[{"BotCall", "[", 
+   RowBox[{"bot", ",", "\"\<getUpdates\>\""}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"userID", "=", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"res", "[", "\"\<result\>\"", "]"}], "[", 
+    RowBox[{"[", "1", "]"}], "]"}], "[", 
+   RowBox[{"\"\<message\>\"", ",", "\"\<from\>\"", ",", "\"\<id\>\""}], 
+   "]"}]}]}], "Input",
+ CellChangeTimes->{{3.699862508710291*^9, 3.6998625695456257`*^9}, 
+   3.699862675211269*^9, {3.699862723301935*^9, 3.699862749939204*^9}, {
+   3.699862858538378*^9, 3.699862943284781*^9}, {3.699863068387953*^9, 
+   3.699863074361204*^9}, {3.699863699707313*^9, 
+   3.699863701023549*^9}},ExpressionUUID->"f5eaf145-6232-4e64-8f5a-\
+c608d844be5c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["step 1: starting the engine!", "Subsection",
+ CellChangeTimes->{{3.699862589655717*^9, 
+  3.6998626050353203`*^9}},ExpressionUUID->"9a74379b-6877-458c-8433-\
+b3faed3d1920"],
 
 Cell[BoxData[{
  RowBox[{
@@ -36,22 +99,31 @@ Cell[BoxData[{
   ";"}], "\n", 
  RowBox[{
   RowBox[{
+   RowBox[{"bot", "=", 
+    RowBox[{"Import", "[", 
+     RowBox[{"configFile", ",", "\"\<RawJSON\>\""}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
    RowBox[{"logSizeLimit", "=", 
     RowBox[{"5", "*", 
-     RowBox[{"10", "^", "4"}]}]}], ";", 
+     RowBox[{"10", "^", "4"}]}]}], 
+   RowBox[{"(*", " ", 
+    RowBox[{"or", " ", "50", "kb"}], " ", "*)"}], ";", 
    RowBox[{"pollTime", "=", ".1"}], ";"}], "\[IndentingNewLine]"}], "\n", 
  RowBox[{
-  RowBox[{"Import", "[", "\"\<~/WolfBot/WolfBot.wl\>\"", "]"}], ";"}], "\n", 
+  RowBox[{"Import", "[", 
+   RowBox[{"FileNameJoin", "[", 
+    RowBox[{"{", 
+     RowBox[{"path", ",", "\"\<WolfBot.wl\>\""}], "}"}], "]"}], "]"}], 
+  ";"}], "\n", 
  RowBox[{
   RowBox[{
    RowBox[{"Needs", "[", "\"\<WolfBot`\>\"", "]"}], ";"}], 
   "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{"BotCall", "[", 
-   RowBox[{
-    RowBox[{"Import", "[", 
-     RowBox[{"configFile", ",", "\"\<RawJSON\>\""}], "]"}], ",", 
-    "\"\<deleteWebhook\>\""}], "]"}], ";"}], "\n", 
+   RowBox[{"bot", ",", "\"\<deleteWebhook\>\""}], "]"}], ";"}], "\n", 
  RowBox[{"BotProcessMessage", "[", 
   RowBox[{
   "configFile", ",", "logSizeLimit", ",", "pollTime", ",", "\"\<\>\""}], 
@@ -85,19 +157,21 @@ Cell[BoxData[{
    3.698819421955418*^9, 3.698819455988082*^9}, {3.698822620266749*^9, 
    3.6988226610668716`*^9}, {3.6988226970393057`*^9, 3.698822703830872*^9}, {
    3.6997058800492373`*^9, 3.699705881863482*^9}, {3.699706241308916*^9, 
-   3.6997062912229424`*^9}},ExpressionUUID->"d63a9c41-b45a-450e-884f-\
-dadc7b808b5f"],
+   3.6997062912229424`*^9}, {3.6998631003550377`*^9, 3.699863110651636*^9}, {
+   3.6998635863584347`*^9, 3.699863597172409*^9}, 
+   3.699863747250996*^9},ExpressionUUID->"d63a9c41-b45a-450e-884f-\
+dadc7b808b5f"]
+}, Open  ]]
+}, Open  ]],
 
-Cell[TextData[StyleBox["webhook", "Section"]], "Text",
- CellChangeTimes->{{3.6997059848431597`*^9, 3.6997059981293697`*^9}, {
-  3.699706321075673*^9, 
-  3.6997063220838213`*^9}},ExpressionUUID->"8d442daa-a223-45b4-b1c6-\
-d6d73d4d34ee"],
+Cell[CellGroupData[{
+
+Cell["webhook", "Section",
+ CellChangeTimes->{{3.699862648681275*^9, 
+  3.699862650159728*^9}},ExpressionUUID->"f42f06d5-e98e-4e82-b1a2-\
+da4f34ab4b64"],
 
 Cell[BoxData[{
- RowBox[{
-  RowBox[{"Import", "[", "\"\<~/WolfBot/WolfBot.wl\>\"", "]"}], ";"}], "\n", 
- RowBox[{"Needs", "[", "\"\<WolfBot`\>\"", "]"}], "\n", 
  RowBox[{
   RowBox[{"path", "=", 
    RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}], "\n", 
@@ -108,12 +182,20 @@ Cell[BoxData[{
      RowBox[{"path", ",", "\"\<configFile.json\>\""}], "}"}], "]"}]}], 
   ";"}], "\n", 
  RowBox[{
-  RowBox[{"logSizeLimit", "=", 
-   RowBox[{"5", "*", 
-    RowBox[{"10", "^", "4"}]}]}], ";", " ", 
-  RowBox[{"pollTime", "=", "0.1"}], ";"}]}], "Input",
- CellChangeTimes->{{3.6997060279810038`*^9, 
-  3.699706169578211*^9}},ExpressionUUID->"eaf4752e-b0ef-42b4-88ae-\
+  RowBox[{
+   RowBox[{"logSizeLimit", "=", 
+    RowBox[{"5", "*", 
+     RowBox[{"10", "^", "4"}]}]}], 
+   RowBox[{"(*", " ", 
+    RowBox[{"or", " ", "50", "kb"}], " ", "*)"}], ";", 
+   RowBox[{"pollTime", "=", ".1"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Import", "[", "\"\<~/WolfBot/WolfBot.wl\>\"", "]"}], ";"}], "\n", 
+ RowBox[{"Needs", "[", "\"\<WolfBot`\>\"", "]"}]}], "Input",
+ CellChangeTimes->{{3.6997060279810038`*^9, 3.699706169578211*^9}, {
+  3.699863655797937*^9, 3.69986367510907*^9}, {3.6998637107878323`*^9, 
+  3.6998637399334173`*^9}},ExpressionUUID->"eaf4752e-b0ef-42b4-88ae-\
 21010dfc7f41"],
 
 Cell[BoxData[
@@ -143,6 +225,7 @@ Cell[BoxData[
      RowBox[{"obj", "[", 
       RowBox[{"[", "1", "]"}], "]"}]}], "}"}]}], "]"}]], "Input",ExpressionUUI\
 D->"42da35f6-b08e-416e-b656-3fe38e4f26e1"]
+}, Open  ]]
 },
 WindowSize->{808, 568},
 WindowMargins->{{20, Automatic}, {Automatic, 44}},
@@ -163,21 +246,33 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 232, 4, 47, "Text", "ExpressionUUID" -> \
-"3bd67cef-e2d0-4006-b415-e71bdc2360e3"],
-Cell[793, 26, 3256, 62, 219, "Input", "ExpressionUUID" -> \
-"d63a9c41-b45a-450e-884f-dadc7b808b5f"],
-Cell[4052, 90, 235, 4, 47, "Text", "ExpressionUUID" -> \
-"8d442daa-a223-45b4-b1c6-d6d73d4d34ee"],
-Cell[4290, 96, 723, 20, 150, "Input", "ExpressionUUID" -> \
+Cell[CellGroupData[{
+Cell[580, 22, 159, 2, 64, "Section", "ExpressionUUID" -> \
+"755562c4-44f2-412a-b44e-405b72739dfc"],
+Cell[CellGroupData[{
+Cell[764, 28, 186, 3, 44, "Subsection", "ExpressionUUID" -> \
+"8af05d45-3dbf-47fd-b295-079356c88296"],
+Cell[953, 33, 1705, 46, 265, "Input", "ExpressionUUID" -> \
+"f5eaf145-6232-4e64-8f5a-c608d844be5c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2695, 84, 178, 3, 44, "Subsection", "ExpressionUUID" -> \
+"9a74379b-6877-458c-8433-b3faed3d1920"],
+Cell[2876, 89, 3650, 73, 265, "Input", "ExpressionUUID" -> \
+"d63a9c41-b45a-450e-884f-dadc7b808b5f"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6575, 168, 152, 3, 64, "Section", "ExpressionUUID" -> \
+"f42f06d5-e98e-4e82-b1a2-da4f34ab4b64"],
+Cell[6730, 173, 949, 25, 150, "Input", "ExpressionUUID" -> \
 "eaf4752e-b0ef-42b4-88ae-21010dfc7f41"],
-Cell[5016, 118, 566, 14, 127, "Input", "ExpressionUUID" -> \
+Cell[7682, 200, 566, 14, 127, "Input", "ExpressionUUID" -> \
 "213cbbe4-8ba0-49f4-bc72-470f606e7a14"],
-Cell[5585, 134, 373, 10, 34, "Input", "ExpressionUUID" -> \
+Cell[8251, 216, 373, 10, 58, "Input", "ExpressionUUID" -> \
 "42da35f6-b08e-416e-b656-3fe38e4f26e1"]
+}, Open  ]]
 }
 ]
 *)
-
-(* End of internal cache information *)
 
