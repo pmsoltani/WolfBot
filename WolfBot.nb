@@ -1,278 +1,69 @@
-(* Content-type: application/vnd.wolfram.mathematica *)
+Notebook[{Cell[
+CellGroupData[{Cell[
+TextData[StyleBox["getUpdates","Section"]],"Section",
+CellID->1],Cell[
+CellGroupData[{Cell[
+TextData[{"step"," ","0",StyleBox[RowBox[{":"," "}]],"required"," ","only"," ","the"," ","first"," ","time"," "}],
+"Subsection",CellID->2],Cell[
+TextData[{"first"," ","evaluate"," ","this"," ","cell",":"}],
+"Text",CellID->42],Cell[
+BoxData[{RowBox[{"path","=","NotebookDirectory","[","]",";","\[IndentingNewLine]","configFile","=","FileNameJoin","[","{","path",",","\"configFile.json\"","}","]",";","\[IndentingNewLine]","bot","=","Import","[","configFile",",","\"RawJSON\"","]",";","\[IndentingNewLine]","\[IndentingNewLine]","Import","[","FileNameJoin","[","{","path",",","\"WolfBot.wl\"","}","]","]",";"}],"\n",RowBox[
+{"Needs","[","\"WolfBot`\"","]",";","\[IndentingNewLine]","\[IndentingNewLine]","BotCall","[","bot",",","\"deleteWebhook\"","]",";","\[IndentingNewLine]"}]}],
+"Input",CellID->4,CellLabel->"In[13]:= "],Cell[
+TextData[{"now",StyleBox[RowBox[{","," "}]],"send"," ","a"," ","message"," ","to"," ","your"," ","bot",StyleBox[
+RowBox[{" ","("}]],"any"," ","message"," ","will"," ","do",StyleBox[RowBox[{" !)"," "}]],"and"," ","then"," ","evaluate"," ","the"," ","following"," ","cell",":"}],
+"Text",CellID->43],Cell[
+CellGroupData[{Cell[
+BoxData[{RowBox[{"res","=","BotCall","[","bot",",","\"getUpdates\"","]",";"}],"\n",RowBox[
+{"username","=","res","[","\"result\"","]","[","[","1","]","]","[","\"message\"",",","\"from\"",",","\"username\"","]","\[IndentingNewLine]","userID","=","res","[","\"result\"","]","[","[","1","]","]","[","\"message\"",",","\"from\"",",","\"id\"","]"}]}],
+"Input",CellID->44,CellLabel->"In[28]:= "],Cell[
+BoxData["74538385",StandardForm],
+"Output",CellID->87,CellLabel->"Out[29]= "]},Open]],Cell[
+TextData[{"copy",StyleBox[
+RowBox[{" ","&"," "}]],"paste"," ","the"," ","username",StyleBox[RowBox[{" ","&"," "}]],"id"," ","into"," ","the",StyleBox[
+RowBox[{" ","\""}]],"configFile",".","json","\"."}],"Text",CellID->73]},Open]],Cell[
+CellGroupData[
+{Cell[
+TextData[{"step"," ","1",StyleBox[RowBox[{":"," "}]],"starting"," ","the"," ","engine"," !"}],
+"Subsection",CellID->6],Cell[
+BoxData[{RowBox[{"path","=","NotebookDirectory","[","]",";"}],"\n",RowBox[
+{"configFile","=","FileNameJoin","[","{","path",",","\"configFile.json\"","}","]",";"}],"\n",RowBox[
+{"bot","=","Import","[","configFile",",","\"RawJSON\"","]",";","\[IndentingNewLine]","\[IndentingNewLine]","logSizeLimit","=","5","*","10","^","4",StyleBox[
+RowBox[{"(*"," ","or"," ","50kb"," ","*)"}]],";","pollTime","=","1",";","\[IndentingNewLine]"}],"\n",RowBox[
+{"Import","[","FileNameJoin","[","{","path",",","\"WolfBot.wl\"","}","]","]",";"}],"\n",RowBox[
+{"Needs","[","\"WolfBot`\"","]",";","\[IndentingNewLine]","\[IndentingNewLine]","BotCall","[","bot",",","\"deleteWebhook\"","]",";"}],"\n",RowBox[
+{"BotProcessMessage","[","configFile",",","logSizeLimit",",","pollTime",",","\"\"","]"}]}],
+"Input",CellID->7,CellLabel->"In[7]:= "]},Open]]},Open]],Cell[
+CellGroupData[{Cell[
 
-(*** Wolfram Notebook File ***)
-(* http://www.wolfram.com/nb *)
-
-(* CreatedBy='Mathematica 11.1' *)
-
-(*CacheID: 234*)
-(* Internal cache information:
-NotebookFileLineBreakTest
-NotebookFileLineBreakTest
-NotebookDataPosition[       158,          7]
-NotebookDataLength[     10065,        270]
-NotebookOptionsPosition[      8640,        229]
-NotebookOutlinePosition[      9157,        247]
-CellTagsIndexPosition[      9114,        244]
-WindowFrame->Normal*)
-
-(* Beginning of Notebook Content *)
-Notebook[{
-
-Cell[CellGroupData[{
-Cell[TextData[StyleBox["getUpdates", "Section"]], "Section",
- CellChangeTimes->{
-  3.69986261407355*^9},ExpressionUUID->"755562c4-44f2-412a-b44e-405b72739dfc"],
-
-Cell[CellGroupData[{
-
-Cell["step 0: required only the first time ", "Subsection",
- CellChangeTimes->{{3.69986246475708*^9, 
-  3.6998624935719433`*^9}},ExpressionUUID->"8af05d45-3dbf-47fd-b295-\
-079356c88296"],
-
-Cell[BoxData[{
- RowBox[{
-  RowBox[{"path", "=", 
-   RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"configFile", "=", 
-   RowBox[{"FileNameJoin", "[", 
-    RowBox[{"{", 
-     RowBox[{"path", ",", "\"\<configFile.json\>\""}], "}"}], "]"}]}], 
-  ";"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"bot", "=", 
-    RowBox[{"Import", "[", 
-     RowBox[{"configFile", ",", "\"\<RawJSON\>\""}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"Import", "[", 
-   RowBox[{"FileNameJoin", "[", 
-    RowBox[{"{", 
-     RowBox[{"path", ",", "\"\<WolfBot.wl\>\""}], "}"}], "]"}], "]"}], 
-  ";"}], "\n", 
- RowBox[{
-  RowBox[{
-   RowBox[{"Needs", "[", "\"\<WolfBot`\>\"", "]"}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"BotCall", "[", 
-    RowBox[{"bot", ",", "\"\<deleteWebhook\>\""}], "]"}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{"res", "=", 
-  RowBox[{"BotCall", "[", 
-   RowBox[{"bot", ",", "\"\<getUpdates\>\""}], "]"}]}], "\[IndentingNewLine]", 
- RowBox[{"userID", "=", 
-  RowBox[{
-   RowBox[{
-    RowBox[{"res", "[", "\"\<result\>\"", "]"}], "[", 
-    RowBox[{"[", "1", "]"}], "]"}], "[", 
-   RowBox[{"\"\<message\>\"", ",", "\"\<from\>\"", ",", "\"\<id\>\""}], 
-   "]"}]}]}], "Input",
- CellChangeTimes->{{3.699862508710291*^9, 3.6998625695456257`*^9}, 
-   3.699862675211269*^9, {3.699862723301935*^9, 3.699862749939204*^9}, {
-   3.699862858538378*^9, 3.699862943284781*^9}, {3.699863068387953*^9, 
-   3.699863074361204*^9}, {3.699863699707313*^9, 
-   3.699863701023549*^9}},ExpressionUUID->"f5eaf145-6232-4e64-8f5a-\
-c608d844be5c"]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["step 1: starting the engine!", "Subsection",
- CellChangeTimes->{{3.699862589655717*^9, 
-  3.6998626050353203`*^9}},ExpressionUUID->"9a74379b-6877-458c-8433-\
-b3faed3d1920"],
-
-Cell[BoxData[{
- RowBox[{
-  RowBox[{"path", "=", 
-   RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}], "\n", 
- RowBox[{
-  RowBox[{"configFile", "=", 
-   RowBox[{"FileNameJoin", "[", 
-    RowBox[{"{", 
-     RowBox[{"path", ",", "\"\<configFile.json\>\""}], "}"}], "]"}]}], 
-  ";"}], "\n", 
- RowBox[{
-  RowBox[{
-   RowBox[{"bot", "=", 
-    RowBox[{"Import", "[", 
-     RowBox[{"configFile", ",", "\"\<RawJSON\>\""}], "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{
-   RowBox[{"logSizeLimit", "=", 
-    RowBox[{"5", "*", 
-     RowBox[{"10", "^", "4"}]}]}], 
-   RowBox[{"(*", " ", 
-    RowBox[{"or", " ", "50", "kb"}], " ", "*)"}], ";", 
-   RowBox[{"pollTime", "=", ".1"}], ";"}], "\[IndentingNewLine]"}], "\n", 
- RowBox[{
-  RowBox[{"Import", "[", 
-   RowBox[{"FileNameJoin", "[", 
-    RowBox[{"{", 
-     RowBox[{"path", ",", "\"\<WolfBot.wl\>\""}], "}"}], "]"}], "]"}], 
-  ";"}], "\n", 
- RowBox[{
-  RowBox[{
-   RowBox[{"Needs", "[", "\"\<WolfBot`\>\"", "]"}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"BotCall", "[", 
-   RowBox[{"bot", ",", "\"\<deleteWebhook\>\""}], "]"}], ";"}], "\n", 
- RowBox[{"BotProcessMessage", "[", 
-  RowBox[{
-  "configFile", ",", "logSizeLimit", ",", "pollTime", ",", "\"\<\>\""}], 
-  "]"}]}], "Input",
- CellChangeTimes->{{3.6974732651482983`*^9, 3.697473330739201*^9}, {
-   3.697477431013803*^9, 3.697477431452259*^9}, {3.697598970532078*^9, 
-   3.697599098300226*^9}, {3.697601425974629*^9, 3.697601472217123*^9}, {
-   3.69760157614802*^9, 3.697601576267679*^9}, {3.6976049338770313`*^9, 
-   3.697604934181382*^9}, {3.69760508964699*^9, 3.697605093933134*^9}, {
-   3.6976058122781057`*^9, 3.697605814889083*^9}, {3.6976058572409153`*^9, 
-   3.697605937630107*^9}, {3.697606013703349*^9, 3.697606088709208*^9}, {
-   3.6976062181194677`*^9, 3.697606249136252*^9}, {3.697614869310711*^9, 
-   3.697614878326326*^9}, {3.6976202376144953`*^9, 3.6976202391085453`*^9}, {
-   3.697622121715507*^9, 3.697622128777861*^9}, {3.697622542475684*^9, 
-   3.697622542643176*^9}, {3.697648138724416*^9, 3.697648148426627*^9}, {
-   3.6976509393740807`*^9, 3.6976509408461*^9}, {3.697656100481944*^9, 
-   3.697656109942245*^9}, 3.697656202044015*^9, {3.6977743581349087`*^9, 
-   3.697774358277211*^9}, {3.697777064342136*^9, 3.697777074877426*^9}, {
-   3.6977800901952257`*^9, 3.697780103399764*^9}, 3.697781146705214*^9, {
-   3.6977949049504538`*^9, 3.697794908449861*^9}, {3.6977951548756933`*^9, 
-   3.697795158394187*^9}, {3.69779519015093*^9, 3.69779520592831*^9}, {
-   3.697795236990919*^9, 3.697795257926264*^9}, {3.697795433376114*^9, 
-   3.697795434477491*^9}, {3.697795466352467*^9, 3.697795482938365*^9}, {
-   3.697798211601115*^9, 3.6977982365077677`*^9}, {3.69781983296262*^9, 
-   3.69781984031763*^9}, 3.697819884390259*^9, {3.6979571858396397`*^9, 
-   3.697957187621889*^9}, 3.6981120377638407`*^9, {3.698127381937462*^9, 
-   3.698127383183549*^9}, {3.698127900781142*^9, 3.6981279016773443`*^9}, {
-   3.698235214120328*^9, 3.698235215152022*^9}, 3.698235247737342*^9, {
-   3.69881873306898*^9, 3.6988187470829573`*^9}, 3.698818927222074*^9, 
-   3.698819180968543*^9, {3.698819233093278*^9, 3.698819238796957*^9}, {
-   3.698819421955418*^9, 3.698819455988082*^9}, {3.698822620266749*^9, 
-   3.6988226610668716`*^9}, {3.6988226970393057`*^9, 3.698822703830872*^9}, {
-   3.6997058800492373`*^9, 3.699705881863482*^9}, {3.699706241308916*^9, 
-   3.6997062912229424`*^9}, {3.6998631003550377`*^9, 3.699863110651636*^9}, {
-   3.6998635863584347`*^9, 3.699863597172409*^9}, 
-   3.699863747250996*^9},ExpressionUUID->"d63a9c41-b45a-450e-884f-\
-dadc7b808b5f"]
-}, Open  ]]
-}, Open  ]],
-
-Cell[CellGroupData[{
-
-Cell["webhook", "Section",
- CellChangeTimes->{{3.699862648681275*^9, 
-  3.699862650159728*^9}},ExpressionUUID->"f42f06d5-e98e-4e82-b1a2-\
-da4f34ab4b64"],
-
-Cell[BoxData[{
- RowBox[{
-  RowBox[{"path", "=", 
-   RowBox[{"NotebookDirectory", "[", "]"}]}], ";"}], "\n", 
- RowBox[{
-  RowBox[{"configFile", "=", 
-   RowBox[{"FileNameJoin", "[", 
-    RowBox[{"{", 
-     RowBox[{"path", ",", "\"\<configFile.json\>\""}], "}"}], "]"}]}], 
-  ";"}], "\n", 
- RowBox[{
-  RowBox[{
-   RowBox[{"logSizeLimit", "=", 
-    RowBox[{"5", "*", 
-     RowBox[{"10", "^", "4"}]}]}], 
-   RowBox[{"(*", " ", 
-    RowBox[{"or", " ", "50", "kb"}], " ", "*)"}], ";", 
-   RowBox[{"pollTime", "=", ".1"}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
- RowBox[{
-  RowBox[{"Import", "[", "\"\<~/WolfBot/WolfBot.wl\>\"", "]"}], ";"}], "\n", 
- RowBox[{"Needs", "[", "\"\<WolfBot`\>\"", "]"}]}], "Input",
- CellChangeTimes->{{3.6997060279810038`*^9, 3.699706169578211*^9}, {
-  3.699863655797937*^9, 3.69986367510907*^9}, {3.6998637107878323`*^9, 
-  3.6998637399334173`*^9}},ExpressionUUID->"eaf4752e-b0ef-42b4-88ae-\
-21010dfc7f41"],
-
-Cell[BoxData[
- RowBox[{"obj", "=", 
-  RowBox[{"CloudDeploy", "[", 
-   RowBox[{
-    RowBox[{"APIFunction", "[", 
-     RowBox[{
-      RowBox[{"{", "}"}], ",", 
-      RowBox[{
-       RowBox[{"BotProcessMessage", "[", 
-        RowBox[{"configFile", ",", "logSizeLimit", ",", "pollTime", ",", 
-         RowBox[{"ToString", "[", 
-          RowBox[{"HTTPRequestData", "[", "\"\<Body\>\"", "]"}], "]"}]}], 
-        "]"}], "&"}]}], "]"}], ",", 
-    RowBox[{"Permissions", "->", "\"\<Public\>\""}]}], "]"}]}]], "Input",Expre\
-ssionUUID->"213cbbe4-8ba0-49f4-bc72-470f606e7a14"],
-
-Cell[BoxData[
- RowBox[{"BotCall", "[", 
-  RowBox[{
-   RowBox[{"Import", "[", 
-    RowBox[{"configFile", ",", "\"\<RawJSON\>\""}], "]"}], ",", 
-   "\"\<setWebhook\>\"", ",", 
-   RowBox[{"{", 
-    RowBox[{"\"\<url\>\"", "->", 
-     RowBox[{"obj", "[", 
-      RowBox[{"[", "1", "]"}], "]"}]}], "}"}]}], "]"}]], "Input",ExpressionUUI\
-D->"42da35f6-b08e-416e-b656-3fe38e4f26e1"]
-}, Open  ]]
-},
-WindowSize->{808, 568},
-WindowMargins->{{20, Automatic}, {Automatic, 44}},
-FrontEndVersion->"11.1 for Mac OS X x86 (32-bit, 64-bit Kernel) (March 13, \
-2017)",
-StyleDefinitions->FrontEnd`FileName[{$RootDirectory, "Applications", 
-   "Mathematica.app", "Contents", "SystemFiles", "FrontEnd", "StyleSheets"}, 
-  "custom.nb", CharacterEncoding -> "UTF-8"]
-]
-(* End of Notebook Content *)
-
-(* Internal cache information *)
-(*CellTagsOutline
-CellTagsIndex->{}
-*)
-(*CellTagsIndex
-CellTagsIndex->{}
-*)
-(*NotebookFileOutline
-Notebook[{
-Cell[CellGroupData[{
-Cell[580, 22, 159, 2, 64, "Section", "ExpressionUUID" -> \
-"755562c4-44f2-412a-b44e-405b72739dfc"],
-Cell[CellGroupData[{
-Cell[764, 28, 186, 3, 44, "Subsection", "ExpressionUUID" -> \
-"8af05d45-3dbf-47fd-b295-079356c88296"],
-Cell[953, 33, 1705, 46, 265, "Input", "ExpressionUUID" -> \
-"f5eaf145-6232-4e64-8f5a-c608d844be5c"]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[2695, 84, 178, 3, 44, "Subsection", "ExpressionUUID" -> \
-"9a74379b-6877-458c-8433-b3faed3d1920"],
-Cell[2876, 89, 3650, 73, 265, "Input", "ExpressionUUID" -> \
-"d63a9c41-b45a-450e-884f-dadc7b808b5f"]
-}, Open  ]]
-}, Open  ]],
-Cell[CellGroupData[{
-Cell[6575, 168, 152, 3, 64, "Section", "ExpressionUUID" -> \
-"f42f06d5-e98e-4e82-b1a2-da4f34ab4b64"],
-Cell[6730, 173, 949, 25, 150, "Input", "ExpressionUUID" -> \
-"eaf4752e-b0ef-42b4-88ae-21010dfc7f41"],
-Cell[7682, 200, 566, 14, 127, "Input", "ExpressionUUID" -> \
-"213cbbe4-8ba0-49f4-bc72-470f606e7a14"],
-Cell[8251, 216, 373, 10, 58, "Input", "ExpressionUUID" -> \
-"42da35f6-b08e-416e-b656-3fe38e4f26e1"]
-}, Open  ]]
-}
-]
-*)
-
+"\<webhook\>","Section",CellID->9],Cell[
+BoxData[{RowBox[{"path","=","NotebookDirectory","[","]",";"}],"\n",RowBox[
+{"configFile","=","FileNameJoin","[","{","path",",","\"configFile.json\"","}","]",";"}],"\n",RowBox[
+{"logSizeLimit","=","5","*","10","^","4",StyleBox[RowBox[{"(*"," ","or"," ","50kb"," ","*)"}]],";","pollTime","=.","1",";","\[IndentingNewLine]","\[IndentingNewLine]","Import","[","\"~/WolfBot/WolfBot.wl\"","]",";"}],"\n",RowBox[
+{"Needs","[","\"WolfBot`\"","]"}]}],"Input",CellID->10,CellLabel->"In[1]:= "],Cell[
+CellGroupData[
+{Cell[
+BoxData[RowBox[{"obj","=",RowBox[{"CloudDeploy","[",RowBox[{RowBox[{"APIFunction","[",RowBox[
+{RowBox[{"{","}"}],",",RowBox[{RowBox[{"BotProcessMessage","[",RowBox[{"configFile",",","logSizeLimit",",","pollTime",",",RowBox[
+{"ToString","[",RowBox[{"HTTPRequestData","[","\"Body\"","]"}],"]"}]}],"]"}],"&"}]}],"]"}],",",RowBox[
+{"Permissions","\[Rule]","\"Public\""}]}],"]"}]}]],"Input",CellID->12,CellLabel->"In[5]:= "],Cell[
+BoxData[
+TagBox[InterpretationBox[RowBox[{"CloudObject","[",TagBox[ButtonBox[PaneSelectorBox[
+{False->"\"https://www.wolframcloud.com/objects/58e4ad8f-4e4c-434f-b393-54add08a5d0a\"",True->StyleBox[
+"\"https://www.wolframcloud.com/objects/58e4ad8f-4e4c-434f-b393-54add08a5d0a\"",{"HyperlinkActive"}]},
+Dynamic[CurrentValue["MouseOver"]],BaseStyle->{"Hyperlink"},FrameMargins->0,ImageSize->Automatic],
+BaseStyle->"Hyperlink",ButtonData->{URL["https://www.wolframcloud.com/objects/58e4ad8f-4e4c-434f-b393-54add08a5d0a"],None},
+ButtonNote->"https://www.wolframcloud.com/objects/58e4ad8f-4e4c-434f-b393-54add08a5d0a"],
+Function[Annotation[Slot[1],"https://www.wolframcloud.com/objects/58e4ad8f-4e4c-434f-b393-54add08a5d0a",
+"Hyperlink"]]],"]"}],CloudObject["https://www.wolframcloud.com/objects/58e4ad8f-4e4c-434f-b393-54add08a5d0a"]],
+"RawBoxes"],StandardForm],"Output",CellID->11,CellLabel->"Out[5]= "]},Open]],Cell[
+CellGroupData[
+{Cell[
+BoxData[RowBox[{"BotCall","[",RowBox[{RowBox[{"Import","[",RowBox[{"configFile",",","\"RawJSON\""}],"]"}],",","\"setWebhook\"",",",RowBox[
+{"{",RowBox[{"\"url\"","\[Rule]",RowBox[{"obj","[",RowBox[{"[","1","]"}],"]"}]}],"}"}]}],"]"}]],
+"Input",CellID->13,CellLabel->"In[6]:= "],Cell[
+BoxData[RowBox[{"\:f113",RowBox[{RowBox[
+{"\"ok\"","\[Rule]","True"}],",",RowBox[{"\"result\"","\[Rule]","True"}],",",RowBox[
+{"\"description\"","\[Rule]","\"Webhook was set\""}]}],"\:f114"}],StandardForm],"Output",
+CellID->17,CellLabel->"Out[6]= "]},Open]]},Open]]},StyleDefinitions->"Default.nb",
+FrontEndVersion->"10.0 for Wolfram Cloud Platform (June 2 2014)"]
