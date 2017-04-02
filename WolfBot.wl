@@ -1639,9 +1639,13 @@ BotCommand[botFile_String,command_Association,followups_Association,
 							darkskyResult=URLExecute[darkskyURL,{},"RawJSON"];
 							
 							response=response<>"Weather Summary:"<>"\n\n"<>
-								"Condition: "<>
+								"Condition: "<>"\n\n"<>
+								"Now: "<>
 								darkskyResult["currently","summary"]<>
-								"\n\n"<>"T: "<>
+								"\n"<>"Today: "<>
+								darkskyResult["daily",
+									"data"][[1]]["summary"]<>"\n\n"<>
+								"T: "<>
 								ToString[
 									Round[
 										darkskyResult["currently",
@@ -1831,7 +1835,14 @@ BotCommand[botFile_String,command_Association,followups_Association,
 						
 						Which[
 							Head[command["data"]]===Image,
-								response=BarcodeRecognize[command["data"]],
+								response=BarcodeRecognize[command["data"],
+									{"Data","Format"}];
+								If[
+									response=={},
+									response="Scan unsuccessful :-(",
+									response="Format: "<>response[[2]]<>
+									"\n\n"<>"Data:"<>"\n"<>response[[1]]
+								],
 								
 							(* QR codes can be made from other file types
 							as well, like contacts. Add them here and in
