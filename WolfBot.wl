@@ -994,7 +994,7 @@ BotCommand[botFile_String,command_Association,followups_Association,
 		{cmd,text,followup,minPrivilege,privilege,response,bot,newUser,newID,
 		darkskyURL,darkskyResult,windBearing,err1,err2},
 		
-		err1="Command wasn't recognized or was incomplete. Use /help";
+		err1="Command wasn't recognized or was incomplete. Use /help.";
 		err2="You don't have enough clearance for this command :-(";
 		
 		(* Some commands like "/start", "/accept" & "/decline", need to
@@ -1238,7 +1238,8 @@ BotCommand[botFile_String,command_Association,followups_Association,
 								RunProcess[$SystemShell,"StandardOutput",
 									"pmset displaysleepnow"<>"\n"<>
 									"exit"<>"\n"];
-								response="",
+								response=<|"text"->"Done!",
+									"keyboard"->BotKeyboardArray[{{}},0,0,1]|>,
 							
 							StringContainsQ[text,"Server screenshot"],
 								(* The "text" variable in this case, has the
@@ -1273,7 +1274,9 @@ BotCommand[botFile_String,command_Association,followups_Association,
 							True,
 								response=RunProcess[$SystemShell,
 									"StandardOutput",text<>"\n"<>"exit"<>"\n"];
+								response="```"<>"\n"<>response<>"\n"<>"```";
 								response=<|"text"->response,
+									"parse_mode"->"Markdown",
 									"keyboard"->BotKeyboardArray[{{}},0,0,1]|>
 						];
 						followup[targetID]={},
@@ -2136,7 +2139,10 @@ BotCommand[botFile_String,command_Association,followups_Association,
 				followup[targetID]={},
 				
 			True,
-				response=err1;
+				response=err1<>"\n\n"<>"Did you mean:"<>"\n\n"<>
+					Nearest[Keys[minPrivilege],cmd,1];
+				response=<|"text"->response,
+					"keyboard"->BotKeyboardArray[{{}},0,0,1]|>;
 				followup[targetID]={}
 		];
 		{response,followup}
@@ -2226,10 +2232,18 @@ BotAnswer[bot_Association,message_,messageID_Integer,targetID_Integer,
 						],
 						
 					KeyExistsQ[msg,"filePath"],
-						BotCall[bot,"sendChatAction",{"chat_id"->targetID,
-							"action"->"upload_document"}];
-						res=BotFileCall[bot,msg["filePath"],
-							"sendDocument","document",args],
+						If[
+							FileExistsQ[msg["filePath"]],
+							
+							BotCall[bot,"sendChatAction",{"chat_id"->targetID,
+								"action"->"upload_document"}];
+							res=BotFileCall[bot,msg["filePath"],
+								"sendDocument","document",args],
+							
+							res=BotCall[bot,"sendMessage",
+								Append[args,"text"->
+									"There was no file to be sent!"]]
+						],
 					
 					KeyExistsQ[msg,"photo"],
 						fileName=FileNameJoin[{saveDir,
@@ -2255,7 +2269,8 @@ BotAnswer[bot_Association,message_,messageID_Integer,targetID_Integer,
 							Append[args,"text"->msg]]
 				],
 				
-			MemberQ[{Graphics,Graphics3D,Graph,Image,Dataset},Head[msg]],
+			MemberQ[{Graphics,Graphics3D,Graph,GeoGraphics,
+				Image,Dataset},Head[msg]],
 				fileName=FileNameJoin[{saveDir,
 					DateString[{"Year","Month","Day",
 						"Hour","Minute","Second"}]<>".png"}];
