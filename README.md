@@ -1,4 +1,6 @@
 # WolfBot
+![alt text][MIT badge]
+
 Telegram bot engine with Wolfram Language
 
 **Note:** After reading this file, if you still have no clue, or have some technical question, contact me.
@@ -266,6 +268,7 @@ Chart size:                       ┌──────────────�
 [Dark Sky API]: https://darksky.net/dev/
 [Shamsi]: https://github.com/pmsoltani/Shamsi-calendar
 
+[MIT badge]: https://img.shields.io/cocoapods/l/AFNetworking.svg
 
 [sc1]: https://github.com/pmsoltani/WolfBot/blob/master/screenshots/1.png
 [sc2]: https://github.com/pmsoltani/WolfBot/blob/master/screenshots/2.png
